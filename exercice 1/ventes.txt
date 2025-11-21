@@ -1,0 +1,6 @@
+2022-01-03 Casablanca TV 3500
+2022-01-04 Rabat PC 7000
+2022-03-12 Casablanca Smartphone 2500
+2023-05-12 Marrakech TV 4000
+2023-05-13 Rabat Smartphone 2000
+2023-07-20 Casablanca PC 6500
