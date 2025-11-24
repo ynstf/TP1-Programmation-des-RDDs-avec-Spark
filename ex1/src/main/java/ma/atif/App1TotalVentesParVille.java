@@ -1,4 +1,4 @@
-package org.example;
+package ma.atif;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
