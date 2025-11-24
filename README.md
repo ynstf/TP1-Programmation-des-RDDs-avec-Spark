@@ -1,4 +1,4 @@
-
+# Analyse Big Data avec Apache Spark RDDs : Traitement des Ventes et des Logs Web en Java
 
 ## Exercice 1 (Traitement des ventes avec Spark / Java)
 
@@ -111,3 +111,75 @@ Rabat - 2023 -> 2000.0
 Casablanca - 2023 -> 6500.0
 ```
 
+---
+
+Ah je comprends ! Tu veux que le README mentionne aussi **le résultat final obtenu** avec l’exemple de fichier `access.log`. Voici une version mise à jour du README en français, avec les résultats inclus :
+
+---
+
+## Exercice 2 : Analyse de fichiers de logs avec RDD en Java
+
+### Description
+
+Cet exercice consiste à analyser des fichiers de logs d’un serveur web au format Apache en utilisant **Apache Spark et les RDDs** en Java. L’objectif est d’extraire des informations clés et de produire des statistiques sur le trafic HTTP.
+
+---
+
+### Démarche et techniques utilisées
+
+1. **Lecture des logs avec Spark RDD**
+   Le fichier de logs est chargé dans un `JavaRDD<String>` pour exploiter les capacités distribuées de Spark. Chaque ligne est traitée comme un élément du RDD.
+
+2. **Parsing avec expressions régulières**
+   Une **expression régulière** est utilisée pour extraire les champs importants : IP, date/heure, méthode HTTP, ressource demandée, code HTTP et taille de la réponse.
+   Chaque ligne devient un objet `LogEntry` structuré pour faciliter l’analyse.
+
+3. **Transformation et filtrage**
+
+   * `map()` : transformer chaque ligne brute en objet `LogEntry`
+   * `filter()` : supprimer les lignes invalides ou mal formatées
+
+4. **Agrégation et statistiques**
+
+   * `count()` : nombre total de requêtes
+   * `filter()` : sélectionner uniquement les erreurs HTTP (≥ 400)
+   * `mapToPair()` + `reduceByKey()` : compter le nombre de requêtes par IP, par ressource ou par code HTTP
+
+5. **Tri et top éléments**
+   Les IPs et ressources les plus fréquentes sont identifiées en triant les paires clé-valeur par ordre décroissant avec `sortByKey(false)`.
+
+6. **Affichage des résultats**
+   Les résultats sont affichés dans la console pour permettre une analyse rapide.
+
+---
+
+### Résultats obtenus (exemple avec le fichier `access.log`)
+
+* **Nombre total de requêtes** : 5
+
+* **Nombre total d’erreurs (HTTP ≥ 400)** : 2
+
+* **Pourcentage d’erreurs** : 40 %
+
+* **Top 5 des IPs les plus actives** :
+
+  1. 192.168.1.11 → 1 requête
+  2. 198.51.100.7 → 1 requête
+  3. 203.0.113.5 → 1 requête
+  4. 127.0.0.1 → 1 requête
+  5. 192.168.1.10 → 1 requête
+
+* **Top 5 des ressources les plus demandées** :
+
+  1. /login → 1 requête
+  2. /index.html → 1 requête
+  3. /api/data?id=123 → 1 requête
+  4. /docs/report.pdf → 1 requête
+  5. /dashboard → 1 requête
+
+* **Répartition des requêtes par code HTTP** :
+
+  * 200 → 2 requêtes
+  * 302 → 1 requête
+  * 404 → 1 requête
+  * 500 → 1 requête
